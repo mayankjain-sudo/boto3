@@ -1,2 +1,2 @@
 # boto3
-AWS automatiion script
+AWS automation script
