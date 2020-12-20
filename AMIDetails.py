@@ -1,13 +1,32 @@
+from collections import defaultdict
+import pandas as pd
 import boto3
 import csv
 import time
 
-boto3 = boto3.session.Session(region_name='ap-south-1')
-ec2 = boto3.client('ec2')
-#images = ec2.describe_images(Owners=['self'])
+client = boto3.client('ec2')
 
-page_iterator = ec2.get_paginator('describe_images').paginate()
-
-for page in page_iterator:
-    for snapshot in page['Images']:
-        print(snapshot['ImageId'])
+images = client.describe_images(Owners=['self'])
+#images = client.describe_images()
+#print(images)
+data = images.get("Images")
+#print(data)
+ami_list = []
+for rawami in data:
+    #print(rawami)
+    ami_list.append(rawami)
+#print(ami_list)
+result_list = []
+for temp in ami_list:
+    dict_keys = temp.keys()
+    #print(dict_keys)
+    temp_row = []
+    for temp_key in dict_keys:
+        temp_row.append(temp[temp_key])
+    #print(temp_row)
+    #print(temp_row)
+    result_list.append(temp_row)
+print(result_list)
+df = pd.DataFrame(result_list,columns=dict_keys)
+#print(df)
+df.to_csv("AMIDetails.csv", index=False)
