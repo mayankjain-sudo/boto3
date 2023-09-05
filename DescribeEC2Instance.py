@@ -4,7 +4,7 @@ import boto3
 import csv
 import time
 
-ec2 = boto3.resource('ec2')
+ec2 = boto3.resource('ec2',region_name="ap-southeast-1")
 
 # Get information for all running instances
 running_instances = ec2.instances.filter(Filters=[{

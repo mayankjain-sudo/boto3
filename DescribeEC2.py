@@ -9,7 +9,7 @@ ec2 = boto3.resource('ec2')
 # Get information for all running instances
 running_instances = ec2.instances.filter(Filters=[{
     'Name': 'instance-state-name',
-    'Values': ['stopped']}])
+    'Values': ['running']}])
 
 ec2info = defaultdict()
 for instance in running_instances:
@@ -54,6 +54,6 @@ for temp in dict_list:
     result_list.append(temp_row)
     #print("**************************************************************************")
 df = pd.DataFrame(result_list,columns=dict_keys)
-df.to_csv("inventoryNCCLstop23sept.csv", index=False)
+df.to_csv("inventorysept.csv", index=False)
 
 
